@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniLuck Lottery - For Ghanaian University Students</title>
+    <style>
+        :root {
+            --primary: #0a5c36;
+            --secondary: #f4c430;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: var(--dark);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 5px solid var(--secondary);
+        }
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .tagline {
+            font-style: italic;
+        }
+        .auth-section {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        .auth-tabs {
+            display: flex;
+            background-color: white;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .auth-tab {
+            padding: 15px 30px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .auth-tab.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        .auth-form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 20px;
+            display: none;
+        }
+        .auth-form.active {
+            display: block;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0a4a2b;
+        }
+        .dashboard {
+            display: none;
+            margin-top: 30px;
+        }
+        .user-info {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .balance {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .prize-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .prize-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .lottery-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .ticket {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+        .ticket-number {
+            font-size: 1.5rem;
+            letter-spacing: 3px;
+        }
+        .ticket-date {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+        .history {
+            margin-top: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .deposit-form {
+            margin-top: 20px;
+        }
+        .payment-options {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .payment-option {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .payment-option.active {
+            border-color: var(--primary);
+            background-color: rgba(10, 92, 54, 0.1);
+        }
+        .payment-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        footer {
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+        @media (max-width: 768px) {
+            .auth-tabs {
+                flex-direction: column;
+            }
+            .actions {
+                flex-direction: column;
+            }
+            .payment-options {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">UniLuck Lottery</div>
+            <div class="tagline">Your Chance to Win Big While in School!</div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Authentication Section -->
+        <div class="auth-section" id="authSection">
+            <div>
+                <div class="auth-tabs">
+                    <div class="auth-tab active" onclick="showForm('login')">Login</div>
+                    <div class="auth-tab" onclick="showForm('register')">Register</div>
+                </div>
+                
+                <div class="auth-form active" id="loginForm">
+                    <h2>Login to Your Account</h2>
+                    <div class="form-group">
+                        <label for="loginEmail">Student Email</label>
+                        <input type="email" id="loginEmail" placeholder="Enter your university email">
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" placeholder="Enter your password">
+                    </div>
+                    <button onclick="login()">Login</button>
+                    <p id="loginError" style="color: red; margin-top: 10px;"></p>
+                </div>
+                
+                <div class="auth-form" id="registerForm">
+                    <h2>Create New Account</h2>
+                    <div class="form-group">
+                        <label for="regName">Full Name</label>
+                        <input type="text" id="regName" placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="regEmail">Student Email</label>
+                        <input type="email" id="regEmail" placeholder="Enter your university email">
+                    </div>
+                    <div class="form-group">
+                        <label for="regPhone">Mobile Number</label>
+                        <input type="tel" id="regPhone" placeholder="Enter your mobile number">
+                    </div>
+                    <div class="form-group">
+                        <label for="regUniversity">University</label>
+                        <select id="regUniversity">
+                            <option value="">Select your university</option>
+                            <option value="UG">University of Ghana</option>
+                            <option value="KNUST">Kwame Nkrumah University of Science and Technology</option>
+                            <option value="UCC">University of Cape Coast</option>
+                            <option value="UEW">University of Education, Winneba</option>
+                            <option value="UDS">University for Development Studies</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="regProgram">Program of Study</label>
+                        <input type="text" id="regProgram" placeholder="Enter your program of study">
+                    </div>
+                    <div class="form-group">
+                        <label for="regPassword">Password</label>
+                        <input type="password" id="regPassword" placeholder="Create a password">
+                    </div>
+                    <div class="form-group">
+                        <label for="regConfirmPassword">Confirm Password</label>
+                        <input type="password" id="regConfirmPassword" placeholder="Confirm your password">
+                    </div>
+                    <button onclick="register()">Register</button>
+                    <p id="registerError" style="color: red; margin-top: 10px;"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard (shown after login) -->
+        <div class="dashboard" id="dashboard">
+            <div class="user-info">
+                <h2>Welcome, <span id="userName"></span>!</h2>
+                <p><strong>University:</strong> <span id="userUniversity"></span></p>
+                <p><strong>Program:</strong> <span id="userProgram"></span></p>
+                <p><strong>Email:</strong> <span id="userEmail"></span></p>
+                <p><strong>Phone:</strong> <span id="userPhone"></span></p>
+                <div class="balance">Balance: GHS <span id="userBalance">0.00</span></div>
+                <div class="actions">
+                    <button onclick="showDepositForm()">Deposit Funds</button>
+                    <button onclick="logout()">Logout</button>
+                </div>
+            </div>
+
+            <div class="deposit-form" id="depositForm" style="display: none;">
+                <h3>Deposit Funds</h3>
+                <div class="payment-options">
+                    <div class="payment-option active" onclick="selectPayment('mobileMoney')">
+                        <div class="payment-icon">📱</div>
+                        <div>Mobile Money</div>
+                    </div>
+                    <div class="payment-option" onclick="selectPayment('card')">
+                        <div class="payment-icon">💳</div>
+                        <div>Visa/Mastercard</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="depositAmount">Amount (GHS)</label>
+                    <input type="number" id="depositAmount" placeholder="Enter amount to deposit">
+                </div>
+                <div id="mobileMoneyDetails">
+                    <div class="form-group">
+                        <label for="mmNumber">Mobile Money Number</label>
+                        <input type="tel" id="mmNumber" placeholder="Enter your mobile money number">
+                    </div>
+                    <div class="form-group">
+                        <label for="mmNetwork">Network</label>
+                        <select id="mmNetwork">
+                            <option value="MTN">MTN</option>
+                            <option value="Vodafone">Vodafone</option>
+                            <option value="AirtelTigo">AirtelTigo</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="cardDetails" style="display: none;">
+                    <div class="form-group">
+                        <label for="cardNumber">Card Number</label>
+                        <input type="text" id="cardNumber" placeholder="Enter card number">
+                    </div>
+                    <div class="form-group">
+                        <label for="cardExpiry">Expiry Date</label>
+                        <input type="text" id="cardExpiry" placeholder="MM/YY">
+                    </div>
+                    <div class="form-group">
+                        <label for="cardCVV">CVV</label>
+                        <input type="text" id="cardCVV" placeholder="CVV">
+                    </div>
+                </div>
+                <button onclick="processDeposit()">Deposit</button>
+                <button onclick="hideDepositForm()">Cancel</button>
+                <p id="depositError" style="color: red; margin-top: 10px;"></p>
+            </div>
+
+            <div class="prize-section">
+                <h2>This Month's Prize</h2>
+                <img src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Brand New Laptop" class="prize-image">
+                <h3>Brand New HP EliteBook Laptop</h3>
+                <p>Winner will be announced on the last day of the month</p>
+            </div>
+
+            <div class="lottery-section">
+                <h2>Buy Lottery Ticket</h2>
+                <p>Each ticket costs GHS 5.00 and gives you a chance to win this month's prize.</p>
+                <button onclick="buyTicket()">Buy Ticket (GHS 5.00)</button>
+                <p id="ticketError" style="color: red; margin-top: 10px;"></p>
+                
+                <h3 style="margin-top: 30px;">Your Tickets</h3>
+                <div id="userTickets">
+                    <!-- Tickets will be displayed here -->
+                </div>
+            </div>
+
+            <div class="history">
+                <h2>Transaction History</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactionHistory">
+                        <!-- Transactions will be displayed here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 UniLuck Lottery. For Ghanaian University Students Only.</p>
+            <p>Must be 18+ to participate. Gambling can be addictive. Play responsibly.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Sample data storage (in a real app, this would be server-side)
+        let users = [
+            {
+                id: 1,
+                name: "Kwame Mensah",
+                email: "kwame.mensah@ug.edu.gh",
+                phone: "0244123456",
+                university: "UG",
+                program: "Computer Science",
+                password: "password123",
+                balance: 50.00,
+                tickets: [
+                    { number: "1234", date: "2023-10-15" },
+                    { number: "5678", date: "2023-10-20" }
+                ],
+                transactions: [
+                    { date: "2023-10-01", description: "Initial Deposit", amount: 100.00, status: "Completed" },
+                    { date: "2023-10-15", description: "Lottery Ticket Purchase", amount: -5.00, status: "Completed" },
+                    { date: "2023-10-20", description: "Lottery Ticket Purchase", amount: -5.00, status: "Completed" }
+                ]
+            }
+        ];
+
+        let currentUser = null;
+        let selectedPaymentMethod = 'mobileMoney';
+
+        // DOM Helper Functions
+        function showForm(formType) {
+            document.getElementById('loginForm').classList.remove('active');
+            document.getElementById('registerForm').classList.remove('active');
+            document.querySelectorAll('.auth-tab').forEach(tab => tab.classList.remove('active'));
+            
+            if (formType === 'login') {
+                document.getElementById('loginForm').classList.add('active');
+                document.querySelectorAll('.auth-tab')[0].classList.add('active');
+            } else {
+                document.getElementById('registerForm').classList.add('active');
+                document.querySelectorAll('.auth-tab')[1].classList.add('active');
+            }
+        }
+
+        function login() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const errorElement = document.getElementById('loginError');
+            
+            if (!email || !password) {
+                errorElement.textContent = "Please enter both email and password";
+                return;
+            }
+            
+            const user = users.find(u => u.email === email && u.password === password);
+            if (user) {
+                currentUser = user;
+                showDashboard();
+            } else {
+                errorElement.textContent = "Invalid email or password";
+            }
+        }
+
+        function register() {
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const phone = document.getElementById('regPhone').value;
+            const university = document.getElementById('regUniversity').value;
+            const program = document.getElementById('regProgram').value;
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('regConfirmPassword').value;
+            const errorElement = document.getElementById('registerError');
+            
+            // Validation
+            if (!name || !email || !phone || !university || !program || !password || !confirmPassword) {
+                errorElement.textContent = "Please fill in all fields";
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                errorElement.textContent = "Passwords do not match";
+                return;
+            }
+            
+            if (users.some(u => u.email === email)) {
+                errorElement.textContent = "Email already registered";
+                return;
+            }
+            
+            // Create new user
+            const newUser = {
+                id: users.length + 1,
+                name,
+                email,
+                phone,
+                university,
+                program,
+                password,
+                balance: 0.00,
+                tickets: [],
+                transactions: []
+            };
+            
+            users.push(newUser);
+            currentUser = newUser;
+            showDashboard();
+        }
+
+        function showDashboard() {
+            document.getElementById('authSection').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            
+            // Update user info
+            document.getElementById('userName').textContent = currentUser.name;
+            document.getElementById('userEmail').textContent = currentUser.email;
+            document.getElementById('userPhone').textContent = currentUser.phone;
+            document.getElementById('userUniversity').textContent = getUniversityName(currentUser.university);
+            document.getElementById('userProgram').textContent = currentUser.program;
+            document.getElementById('userBalance').textContent = currentUser.balance.toFixed(2);
+            
+            // Load tickets
+            loadUserTickets();
+            
+            // Load transaction history
+            loadTransactionHistory();
+        }
+
+        function getUniversityName(code) {
+            const universities = {
+                'UG': 'University of Ghana',
+                'KNUST': 'Kwame Nkrumah University of Science and Technology',
+                'UCC': 'University of Cape Coast',
+                'UEW': 'University of Education, Winneba',
+                'UDS': 'University for Development Studies'
+            };
+            return universities[code] || code;
+        }
+
+        function logout() {
+            currentUser = null;
+            document.getElementById('authSection').style.display = 'block';
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('loginEmail').value = '';
+            document.getElementById('loginPassword').value = '';
+            document.getElementById('loginError').textContent = '';
+        }
+
+        function showDepositForm() {
+            document.getElementById('depositForm').style.display = 'block';
+        }
+
+        function hideDepositForm() {
+            document.getElementById('depositForm').style.display = 'none';
+            document.getElementById('depositError').textContent = '';
+        }
+
+        function selectPayment(method) {
+            selectedPaymentMethod = method;
+            document.querySelectorAll('.payment-option').forEach(opt => opt.classList.remove('active'));
+            document.querySelectorAll('.payment-option')[method === 'mobileMoney' ? 0 : 1].classList.add('active');
+            
+            document.getElementById('mobileMoneyDetails').style.display = method === 'mobileMoney' ? 'block' : 'none';
+            document.getElementById('cardDetails').style.display = method === 'card' ? 'block' : 'none';
+        }
+
+        function processDeposit() {
+            const amount = parseFloat(document.getElementById('depositAmount').value);
+            const errorElement = document.getElementById('depositError');
+            
+            if (!amount || amount <= 0) {
+                errorElement.textContent = "Please enter a valid amount";
+                return;
+            }
+            
+            // In a real app, this would process payment with a payment gateway
+            // For this demo, we'll just add to balance
+            currentUser.balance += amount;
+            currentUser.transactions.unshift({
+                date: new Date().toISOString().split('T')[0],
+                description: "Deposit",
+                amount: amount,
+                status: "Completed"
+            });
+            
+            // Update UI
+            document.getElementById('userBalance').textContent = currentUser.balance.toFixed(2);
+            loadTransactionHistory();
+            hideDepositForm();
+            
+            // Show success message
+            alert(`Successfully deposited GHS ${amount.toFixed(2)}`);
+        }
+
+        function buyTicket() {
+            const errorElement = document.getElementById('ticketError');
+            
+            if (currentUser.balance < 5) {
+                errorElement.textContent = "Insufficient balance. Please deposit funds.";
+                return;
+            }
+            
+            // Generate random 4-digit ticket
+            const ticketNumber = Math.floor(1000 + Math.random() * 9000).toString();
+            
+            // Deduct balance and add ticket
+            currentUser.balance -= 5;
+            currentUser.tickets.unshift({
+                number: ticketNumber,
+                date: new Date().toISOString().split('T')[0]
+            });
+            
+            currentUser.transactions.unshift({
+                date: new Date().toISOString().split('T')[0],
+                description: "Lottery Ticket Purchase",
+                amount: -5.00,
+                status: "Completed"
+            });
+            
+            // Update UI
+            document.getElementById('userBalance').textContent = currentUser.balance.toFixed(2);
+            loadUserTickets();
+            loadTransactionHistory();
+            
+            // Show success message with ticket number
+            alert(`Ticket purchased successfully! Your number: ${ticketNumber}`);
+        }
+
+        function loadUserTickets() {
+            const container = document.getElementById('userTickets');
+            container.innerHTML = '';
+            
+            if (currentUser.tickets.length === 0) {
+                container.innerHTML = '<p>You have no tickets yet. Buy one to participate!</p>';
+                return;
+            }
+            
+            currentUser.tickets.forEach(ticket => {
+                const ticketElement = document.createElement('div');
+                ticketElement.className = 'ticket';
+                ticketElement.innerHTML = `
+                    <div class="ticket-number">${ticket.number}</div>
+                    <div class="ticket-date">Purchased: ${ticket.date}</div>
+                `;
+                container.appendChild(ticketElement);
+            });
+        }
+
+        function loadTransactionHistory() {
+            const tbody = document.getElementById('transactionHistory');
+            tbody.innerHTML = '';
+            
+            currentUser.transactions.forEach(trans => {
+                const row = document.createElement('tr');
+                const amountClass = trans.amount > 0 ? 'text-success' : 'text-danger';
+                
+                row.innerHTML = `
+                    <td>${trans.date}</td>
+                    <td>${trans.description}</td>
+                    <td class="${amountClass}">${trans.amount > 0 ? '+' : ''}${trans.amount.toFixed(2)}</td>
+                    <td>${trans.status}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+    </script>
+</body>
+</html>
